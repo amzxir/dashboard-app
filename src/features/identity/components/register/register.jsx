@@ -10,8 +10,8 @@ const Register = () => {
     const submitForm = useSubmit();
 
     const onSubmit = data => {
-        const { confirmPassword , ...newData } = data
-        submitForm(newData , { method:'post' })
+        const { confirmPassword, ...newData } = data
+        submitForm(newData, { method: 'post' })
     }
 
     const navigation = useNavigation();
@@ -24,10 +24,10 @@ const Register = () => {
     useEffect(() => {
         if (isSuccessForm) {
             setTimeout(() => {
-                navigate('login')
+                navigate('/login')
             }, 2000);
         }
-    },[isSuccessForm])
+    }, [isSuccessForm])
 
     const routeError = useRouteError();
 
@@ -119,7 +119,7 @@ const Register = () => {
                                 routeError && (
                                     <div className="alert alert-danger text-danger p-2 mt-3">
                                         {
-                                            routeError.response?.data.map((error , index) =>  <p className="mb-0" key={index}>{error.description}</p>)
+                                            routeError.response?.data.map((error, index) => <p className="mb-0" key={index}>{error.description}</p>)
                                         }
                                     </div>
                                 )
@@ -138,6 +138,6 @@ export async function submitAction({ request }) {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
 
-    const response = await HttpService.post("/Users" , data);
+    const response = await HttpService.post("/Users", data);
     return response.status === 200;
 } 
