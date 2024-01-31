@@ -12,6 +12,12 @@ const appReducer = (state , action) => {
                 theme:action.payload
             }
         }
+        case "CHANGE_SIDEBAR" :{
+            return {
+                ...state ,
+                sidebar:!state.sidebar
+            }
+        }
         
     }
 }

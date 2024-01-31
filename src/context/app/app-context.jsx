@@ -6,7 +6,8 @@ const AppContext = createContext();
 
 const initialState = {
     language: localStorage.getItem("language") || 'fa',
-    theme:localStorage.getItem("theme") || 'light'
+    theme: localStorage.getItem("theme") || 'light',
+    sidebar: true
 }
 
 const AppProvider = ({ children }) => {
@@ -19,23 +20,28 @@ const AppProvider = ({ children }) => {
     }
 
     const chnageTheme = (theme) => {
-        dispatch({ type:"CHANGE_THEME" , payload:theme })
+        dispatch({ type: "CHANGE_THEME", payload: theme })
+    }
+
+
+    const chnageSidebar = () => {
+        dispatch({ type: "CHANGE_SIDEBAR" })
     }
 
 
     useEffect(() => {
         i18n.changeLanguage(state.language)
-        localStorage.setItem("language" , state.language)
+        localStorage.setItem("language", state.language)
         document.body.dataset.direction = state.language === 'fa' ? 'rtl' : 'ltr';
-        document.body.dataset.sidebarPosition = state.language === 'fa' ? 'rtl' : 'ltr';
+        document.body.dataset.sidebarPosition = state.language === 'fa' ? 'right' : 'left';
     }, [state.language])
 
     useEffect(() => {
-        localStorage.setItem("theme" , state.theme)
+        localStorage.setItem("theme", state.theme)
     }, [state.theme])
 
     return (
-        <AppContext.Provider value={{ ...state, chnageLan , chnageTheme }}>
+        <AppContext.Provider value={{ ...state, chnageLan, chnageTheme, chnageSidebar }}>
             {children}
         </AppContext.Provider>
     )
