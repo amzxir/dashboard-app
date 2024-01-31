@@ -7,10 +7,10 @@ import MainLayouts from "./layouts/MianLayouts/main-layouts";
 
 const router = createBrowserRouter([
     {
-        path:'/',
         element:<MainLayouts/>,
         children:[
             {
+                path:'/',
                 element:<Courses/>,
                 index:true,
             }
