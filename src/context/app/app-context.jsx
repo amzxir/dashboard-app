@@ -7,7 +7,7 @@ const AppContext = createContext();
 const initialState = {
     language: localStorage.getItem("language") || 'fa',
     theme: localStorage.getItem("theme") || 'light',
-    sidebar: true
+    sidebar: false,
 }
 
 const AppProvider = ({ children }) => {

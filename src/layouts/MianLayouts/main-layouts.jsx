@@ -1,12 +1,16 @@
-import { useState } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import Footer from "./footer"
 import NavTop from "./nav-top"
 import Sidebar from "./sidebar"
 
 const MainLayouts = () => {
 
-    const [collapseSidebar, setCollapseSidebar] = useState(false);
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+
+    if (!token) {
+        navigate('/login')
+    }
 
     return (
         <div className="wrapper" style={{ minHeight: '100h' }}>
