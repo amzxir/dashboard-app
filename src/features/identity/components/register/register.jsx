@@ -45,7 +45,7 @@ const Register = () => {
                 </p>
                 <p className="lead">
                     قبلا ثبت نام نکرده اید؟
-                    <Link to="/login" className="me-2">ثبت نام کنید </Link>
+                    <Link to="/login" className="me-2">ورود کنید </Link>
                 </p>
             </div>
 
