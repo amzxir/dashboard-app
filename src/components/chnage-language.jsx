@@ -8,6 +8,10 @@ const ChangeLanguage = () => {
 
     const { chnageLan , language } = useAppContext();
 
+    useEffect(() => {
+        setIsOpen(false)
+    },[language])
+
     const ref = useRef();
 
     useEffect(() => {
