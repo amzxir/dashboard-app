@@ -4,8 +4,8 @@ import Register, { submitAction } from "./features/identity/components/register/
 import IdentityLayouts from "./layouts/identity-layouts";
 import Courses, { coursesLodear } from "./pages/courses";
 import MainLayouts from "./layouts/MianLayouts/main-layouts";
-import CoursesCategory from "./pages/courses-category";
-import CoursesDetails, { detailsCoursesLoader } from "./features/courses/courses-details";
+import CoursesCategory, { coursesCategoryLoader } from "./pages/courses-category";
+import CoursesDetails, { detailsCoursesLoader } from "./features/courses/components/courses-details";
 
 const router = createBrowserRouter([
     {
@@ -19,7 +19,8 @@ const router = createBrowserRouter([
             },
             {
                 path:'course-categories',
-                element:<CoursesCategory/>
+                element:<CoursesCategory/>,
+                loader:coursesCategoryLoader
             },
             {
                 path:'courses-details/:id',
