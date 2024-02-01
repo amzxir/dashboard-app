@@ -1,5 +1,6 @@
 import logo from "@assets/images/logo.svg"
 import { useAppContext } from "../../context/app/app-context";
+import { Link } from "react-router-dom";
 
 
 const Sidebar = () => {
@@ -16,22 +17,22 @@ const Sidebar = () => {
                 <ul className="sidebar-nav pe-0">
                     <li className="sidebar-header fw-bolder fs-lg">مدیریت دوره ها</li>
                     <li className="sidebar-item">
-                        <a aria-current="page" className="sidebar-link" href="/">
+                        <Link aria-current="page" className="sidebar-link" to="/">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-video align-middle me-2">
                                 <polygon points="23 7 16 12 23 17 23 7"></polygon>
                                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
                             </svg>
                             <span className="align-middle me-2">همه دوره ها</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="sidebar-item">
-                        <a className="sidebar-link" href="/course-categories">
+                        <Link className="sidebar-link" to="/course-categories">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-video align-middle me-2">
                                 <polygon points="23 7 16 12 23 17 23 7"></polygon>
                                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
                             </svg>
                             <span className="align-middle me-2">دسته بندی دوره ها</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="sidebar-item">
                         <a className="sidebar-link">

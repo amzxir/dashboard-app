@@ -4,16 +4,21 @@ import Register, { submitAction } from "./features/identity/components/register/
 import IdentityLayouts from "./layouts/identity-layouts";
 import Courses, { coursesLodear } from "./pages/courses";
 import MainLayouts from "./layouts/MianLayouts/main-layouts";
+import CoursesCategory from "./pages/courses-category";
 
 const router = createBrowserRouter([
     {
+        path:'/',
         element:<MainLayouts/>,
         children:[
             {
-                path:'/',
                 element:<Courses/>,
                 index:true,
                 loader:coursesLodear
+            },
+            {
+                path:'course-categories',
+                element:<CoursesCategory/>
             }
         ]
     },
