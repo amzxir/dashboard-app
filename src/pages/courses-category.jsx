@@ -27,13 +27,17 @@ const CoursesCategory = () => {
 
 export default CoursesCategory;
 
-export async function coursesCategoryLoader() {
+export async function coursesCategoryLoader({ request }) {
     return defer({
-        categories: loaderCategory()
+        categories: loaderCategory(request)
     })
 }
 
-const loaderCategory = async () => {
-    const response = await HttpInterCeptoredService.get('/CourseCategory/sieve');
+const loaderCategory = async (request) => {
+    const page = new URL(request.url).searchParams.get('page') || 1;
+    const pageSize = 6;
+    let url = '/CourseCategory/sieve';
+    url += `?page=${page}&pageSize=${pageSize}`
+    const response = await HttpInterCeptoredService.get(url);
     return response.data;
 }
