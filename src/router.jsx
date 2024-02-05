@@ -6,43 +6,48 @@ import Courses, { coursesLodear } from "./pages/courses";
 import MainLayouts from "./layouts/MianLayouts/main-layouts";
 import CoursesCategory, { coursesCategoryLoader } from "./pages/courses-category";
 import CoursesDetails, { detailsCoursesLoader } from "./features/courses/components/courses-details";
+import { CategoryProvider } from "./features/category/components/category-context";
 
 const router = createBrowserRouter([
     {
-        path:'/',
-        element:<MainLayouts/>,
-        children:[
+        path: '/',
+        element: <MainLayouts />,
+        children: [
             {
-                element:<Courses/>,
-                index:true,
-                loader:coursesLodear
+                element: <Courses />,
+                index: true,
+                loader: coursesLodear
             },
             {
-                path:'course-categories',
-                element:<CoursesCategory/>,
-                loader:coursesCategoryLoader
+                path: 'course-categories',
+                element: (
+                    <CategoryProvider>
+                        <CoursesCategory />
+                    </CategoryProvider>
+                ),
+                loader: coursesCategoryLoader
             },
             {
-                path:'courses-details/:id',
-                element:<CoursesDetails/>,
-                loader:detailsCoursesLoader
+                path: 'courses-details/:id',
+                element: <CoursesDetails />,
+                loader: detailsCoursesLoader
             }
         ]
     },
     {
-        element:<IdentityLayouts/>,
-        children:[
+        element: <IdentityLayouts />,
+        children: [
             {
-                path:'login',
-                element:<Login/>,
-                errorElement:<Login/>,
-                action:loginAction
+                path: 'login',
+                element: <Login />,
+                errorElement: <Login />,
+                action: loginAction
             },
             {
-                path:'register',
-                element:<Register/>,
-                errorElement:<Register/>,
-                action:submitAction
+                path: 'register',
+                element: <Register />,
+                errorElement: <Register />,
+                action: submitAction
             }
         ]
     },

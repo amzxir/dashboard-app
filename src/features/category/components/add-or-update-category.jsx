@@ -2,12 +2,24 @@ import { useForm } from "react-hook-form";
 import { HttpInterCeptoredService } from "@core/http-service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useCategoryContext } from "./category-context";
 
 
 const AddOrUpdateCategory = ({ setShowAddCategory }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const { register, handleSubmit, formState: { errors } , setValue } = useForm();
+
+    const { category , setCategory } = useCategoryContext();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (category) {
+            setValue('name' , category.name)
+            setValue('id' , category.id)
+        }
+    },[category])
 
     const onSubmit = async (data) => {
         setShowAddCategory(false);
@@ -20,6 +32,9 @@ const AddOrUpdateCategory = ({ setShowAddCategory }) => {
                     render(){
                         const url = new URL(window.location.href);
                         navigate(url.pathname + url.search);
+                        if (category) {
+                            setCategory(null)
+                        }
                         return 'عملیات با موفقیت انجام شد'
                     }
                 },
@@ -36,6 +51,11 @@ const AddOrUpdateCategory = ({ setShowAddCategory }) => {
                 position:'bottom-left'
             }
         )
+    }
+
+    const onClose = () => {
+        setShowAddCategory(false);
+        setCategory(null)
     }
 
     return (
@@ -56,7 +76,7 @@ const AddOrUpdateCategory = ({ setShowAddCategory }) => {
                         }
                     </div>
                     <div className="text-start mt-3">
-                        <button type="button" className="btn btn-lg btn-secondary ms-2" onClick={() => setShowAddCategory(false)}>بستن</button>
+                        <button type="button" className="btn btn-lg btn-secondary ms-2" onClick={onClose}>بستن</button>
                         <button type="submit" className="btn btn-lg btn-primary me-2">ثبت تغییرات</button>
                     </div>
                 </form>
