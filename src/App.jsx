@@ -3,6 +3,8 @@ import { RouterProvider } from "react-router-dom"
 import router from "./router"
 import "./core/i18next";
 import { useAppContext } from "./context/app/app-context";
+import "react-toastify/dist/ReactToastify.css"
+import { ToastContainer } from "react-toastify";
 
 function App() {
 
@@ -21,7 +23,10 @@ function App() {
   }, [theme])
 
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer rtl />
+    </>
   )
 }
 

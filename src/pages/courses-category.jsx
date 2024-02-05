@@ -3,11 +3,15 @@ import { HttpInterCeptoredService } from "@core/http-service";
 import CategoryList from "../features/category/components/category-list";
 import { Suspense, useState } from "react";
 import Modal from "../components/modal";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const CoursesCategory = () => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [selectedCategory , setSelectedCategory] = useState();
+    const [selectedCategory, setSelectedCategory] = useState();
+
+    const { t } = useTranslation()
 
     const navigate = useNavigate();
 
@@ -18,12 +22,29 @@ const CoursesCategory = () => {
 
     const handleDeleteCategory = async () => {
         setShowDeleteModal(false);
-        const response = await HttpInterCeptoredService.delete(`/CourseCategory/${selectedCategory}`);
+        const response = HttpInterCeptoredService.delete(`/CourseCategory/${selectedCategory}`);
 
-        if (response.status === 200) {
-            const url = new URL(window.location.href);
-            navigate(url.pathname + url.search);
-        }
+        toast.promise(
+            response, {
+                pending:'در حال دریافت اطلاعات ...',
+                success:{
+                    render(){
+                        const url = new URL(window.location.href);
+                        navigate(url.pathname + url.search);
+                        return 'عملیات با موفقیت انجام شد'
+                    }
+                },
+                error:{
+                    render({ data }){
+                        return ('categoryList' + data.response.data.code)
+                    }
+                }
+
+            },{
+                position:'bottom-left'
+            }
+        )
+
 
     }
 

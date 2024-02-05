@@ -1,5 +1,8 @@
 {
     "register" : {
         "register":"register"
+    },
+    "categoryList":{
+        "DeleteIsNotPossible":"It is not possible to delete this category"
     }
 }
