@@ -1,27 +1,55 @@
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import { HttpInterCeptoredService } from "@core/http-service";
 import CategoryList from "../features/category/components/category-list";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import Modal from "../components/modal";
 
 const CoursesCategory = () => {
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedCategory , setSelectedCategory] = useState();
+
+    const navigate = useNavigate();
+
+    const deleteCategory = (categoryId) => {
+        setSelectedCategory(categoryId);
+        setShowDeleteModal(true);
+    }
+
+    const handleDeleteCategory = async () => {
+        setShowDeleteModal(false);
+        const response = await HttpInterCeptoredService.delete(`/CourseCategory/${selectedCategory}`);
+
+        if (response.status === 200) {
+            const url = new URL(window.location.href);
+            navigate(url.pathname + url.search);
+        }
+
+    }
 
     const data = useLoaderData();
 
     return (
-        <div className="row">
-            <div className="col-12">
-                <div className="d-flex align-items-center justify-content-between mb-5">
-                    <a className="btn btn-primary fw-bolder mt-n1">افزودن دسته جدید</a>
+        <>
+            <div className="row">
+                <div className="col-12">
+                    <div className="d-flex align-items-center justify-content-between mb-5">
+                        <a className="btn btn-primary fw-bolder mt-n1">افزودن دسته جدید</a>
+                    </div>
+                    <Suspense fallback={<p>... درحال دریافت اطلاعات</p>}>
+                        <Await resolve={data.categories}>
+                            {
+                                (loaderCategories) => <CategoryList deleteCategory={deleteCategory} categories={loaderCategories} />
+                            }
+                        </Await>
+                    </Suspense>
                 </div>
-                <Suspense fallback={<p>... درحال دریافت اطلاعات</p>}>
-                    <Await resolve={data.categories}>
-                        {
-                            (loaderCategories) => <CategoryList categories={loaderCategories} />
-                        }
-                    </Await>
-                </Suspense>
             </div>
-        </div>
+            <Modal isOpen={showDeleteModal} close={setShowDeleteModal} title="حذف" body="آیا از حذف این دسته اطمینان دارید ؟" >
+                <button type="button" className="btn btn-secondary fw-bolder" onClick={() => setShowDeleteModal(false)}>انصراف</button>
+                <button type="button" className="btn btn-primary fw-bolder" onClick={handleDeleteCategory}>حذف</button>
+            </Modal>
+        </>
     )
 }
 
