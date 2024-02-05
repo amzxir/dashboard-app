@@ -5,11 +5,13 @@ import { Suspense, useState } from "react";
 import Modal from "../components/modal";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import AddOrUpdateCategory from "../features/category/components/add-or-update-category";
 
 const CoursesCategory = () => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState();
+    const [showAddcategory , setShowAddCategory] = useState(false)
 
     const { t } = useTranslation()
 
@@ -36,7 +38,11 @@ const CoursesCategory = () => {
                 },
                 error:{
                     render({ data }){
-                        return ('categoryList' + data.response.data.code)
+                        if (data.response.status === 400) {
+                            return ('categoryList' + data.response.data.code)
+                        } else {
+                            return 'خطا در اجرای عملیات'
+                        }
                     }
                 }
 
@@ -55,8 +61,11 @@ const CoursesCategory = () => {
             <div className="row">
                 <div className="col-12">
                     <div className="d-flex align-items-center justify-content-between mb-5">
-                        <a className="btn btn-primary fw-bolder mt-n1">افزودن دسته جدید</a>
+                        <a className="btn btn-primary fw-bolder mt-n1" onClick={() => setShowAddCategory(true)}>افزودن دسته جدید</a>
                     </div>
+                    {
+                        showAddcategory && <AddOrUpdateCategory setShowAddCategory={setShowAddCategory}/>
+                    }
                     <Suspense fallback={<p>... درحال دریافت اطلاعات</p>}>
                         <Await resolve={data.categories}>
                             {
